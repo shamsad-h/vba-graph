@@ -10,7 +10,7 @@ The module works by taking two inputs from different cells in the spreadsheet:
 Key features:
 
 * The graph automatically scales the axes:
-    * The y-axis automatically changes its maximum and minimum values to make the graph as large as possible
+    * The y-axis automatically adjusts its maximum and minimum values to effectively 'zoom in' on the graph
     * The x-axis automatically changes between years and months depending on the timeframe
 * The graph can accomodate share price data for as many stocks/indices as necessary
 * The graph is set to format to a ready-to-use design
