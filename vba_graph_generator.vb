@@ -1,7 +1,7 @@
 Private Sub CommandButton1_Click()
 
 Dim my_chart As ChartObject
-Dim var As Range
+Dim rng As Range
 Dim srs As Series
 Dim FirstTime As Boolean
 Dim MaxNumber As Double
@@ -9,9 +9,10 @@ Dim MinNumber As Double
 Dim MaxChartNumber As Double
 Dim MinChartNumber As Double
 Dim SeriesNumber As Integer
+Dim SeriesCount As Integer
 
 'Data range for chart
-Set var = ActiveSheet.Range(Range("O3").Value)
+Set rng = ActiveSheet.Range(Range("O3").Value)
 
 'Draw chart
 Set my_chart = ActiveSheet.ChartObjects.Add( _
@@ -21,7 +22,7 @@ Set my_chart = ActiveSheet.ChartObjects.Add( _
     Height:=250)
 
 'Supply data to chart
-my_chart.Chart.SetSourceData Source:=var
+my_chart.Chart.SetSourceData Source:=rng
 
 'Determine the chart type
 my_chart.Chart.ChartType = xlLine
@@ -84,6 +85,15 @@ For Each my_chart In ActiveSheet.ChartObjects
                 my_chart.Chart.Axes(xlCategory).MajorUnitScale = xlMonths
             End If
             
+        
+        'Determine number of series
+            SeriesCount = my_chart.Chart.SeriesCollection.Count
+            
+        'Remove legend if only one series
+            If SeriesCount = 1 Then
+                my_chart.Chart.HasLegend = False
+            End If
+            
         FirstTime = False
         
     Next srs
@@ -91,6 +101,7 @@ For Each my_chart In ActiveSheet.ChartObjects
     'Rescale y-axis
         my_chart.Chart.Axes(xlValue).MinimumScale = Application.WorksheetFunction.Floor(MinChartNumber, 10)
         my_chart.Chart.Axes(xlValue).MaximumScale = Application.WorksheetFunction.Ceiling(MaxChartNumber, 10)
+        
 
 Next my_chart
                 
